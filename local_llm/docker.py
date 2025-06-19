@@ -4,6 +4,26 @@ from pathlib import Path
 import os
 
 
+
+PROMPT_TEMPLATE = """
+Generate an ideal Dockerfile for a {language} application following best practices.
+The application {has_dependencies} dependencies.
+
+Requirements:
+1. Use the most appropriate official base image
+2. {dependency_instructions}
+3. Set proper working directory
+4. Copy only necessary files
+5. Use multi-stage build if beneficial
+6. Follow security best practices
+7. Expose necessary ports if it's a web application
+8. Include proper cleanup to minimize image size
+
+Output ONLY the Dockerfile content with no additional explanation or commentary.
+"""
+
+
+
 def get_dependency_info(language):
     """Determine if project has dependencies and how to install them"""
     dep_files = {
@@ -37,7 +57,7 @@ def save_dockerfile(content, path='.'):
     except Exception as e:
         print(f"Error saving Dockerfile: {e}")
 
-        
+
 
 
 def generate_dockerfile(language):
