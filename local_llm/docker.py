@@ -4,6 +4,20 @@ from pathlib import Path
 import os
 
 
+def get_dependency_info(language):
+    """Determine if project has dependencies and how to install them"""
+    dep_files = {
+        'python': 'requirements.txt',
+        'javascript': 'package.json',
+        'java': 'pom.xml',
+        'golang': 'go.mod',
+        'ruby': 'Gemfile',
+        'php': 'composer.json'
+    }
+
+
+    
+
 def generate_dockerfile(language):
     """Generate Dockerfile using Ollama"""
 
