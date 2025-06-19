@@ -27,7 +27,17 @@ def get_dependency_info(language):
         'has_dependencies': False,
         'instructions': "No specific dependency installation needed"
     }
+def save_dockerfile(content, path='.'):
+    """Save generated Dockerfile"""
+    dockerfile_path = Path(path) / 'Dockerfile'
+    try:
+        with open(dockerfile_path, 'w') as f:
+            f.write(content)
+        print(f"\nDockerfile saved to: {dockerfile_path.resolve()}")
+    except Exception as e:
+        print(f"Error saving Dockerfile: {e}")
 
+        
 
 
 def generate_dockerfile(language):
