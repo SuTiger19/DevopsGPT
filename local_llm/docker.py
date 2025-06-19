@@ -15,8 +15,20 @@ def get_dependency_info(language):
         'php': 'composer.json'
     }
 
+    dep_file = dep_files.get(language.lower())
+    if dep_file and os.path.exists(dep_file):
+        with open(dep_file) as f:
+            content = f.read()
+            return {
+                'has_dependencies': True,
+                'instructions': f"Install dependencies from {dep_file}"
+            }
+    return {
+        'has_dependencies': False,
+        'instructions': "No specific dependency installation needed"
+    }
 
-    
+
 
 def generate_dockerfile(language):
     """Generate Dockerfile using Ollama"""
