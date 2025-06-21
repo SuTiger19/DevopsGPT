@@ -24,7 +24,7 @@ This Python script automatically generates meaningful commit messages by analyzi
    ```bash
    git clone https://github.com/your-username/git-commit-ai.git
    cd git-commit-ai
-````
+    ```
 
 2. **Install dependencies:**
 
@@ -39,6 +39,18 @@ This Python script automatically generates meaningful commit messages by analyzi
    ```bash
    ollama run llama3
    ```
+
    ```bash
    ollama run  {YOUR MODEL}
    ```
+
+##  Usage
+
+Simply run the script from the root of your Git repository:
+
+```bash
+python generate_commit_msg.py
+```
+
+If there are changes between the last two commits, it will output a suggested commit message based on those changes.
+
