@@ -1,3 +1,32 @@
+import ollama
+from pathlib import Path
+import os
+
+PROMPT_TEMPLATE = """
+Generate an ideal GitHub Action for a Terraform application following best practices.
+
+Requirements:
+1. Run the workflow on these branches: {BRANCH}. If the branch is 'main', trigger only on pull requests.
+2. Set permissions:
+   contents: read
+   pull-requests: write
+3. Inside the job, do the following:
+   a. Create environment variables for GitHub token and cloud credentials: {CREDENTIALS}, and specify the Terraform working directory: {TF_DIR}.
+   b. Set verbosity for Terraform logs.
+   c. Run the following steps in order:
+      - checkout
+      - setup Terraform
+      - terraform fmt
+      - terraform sec scan
+      - terraform lint
+      - terraform validate
+      - terraform plan
+   d. For `terraform plan`, if `github.event_name == 'pull_request'`, run a script that:
+      - collects the outputs of each Terraform step
+      - formats them into a comment
+      - uses `github.rest.issues.createComment` to post the result back to the pull request
+"""
+
 def get_credentials(cloud):
     """Return credentials required for a given cloud provider"""
     cloud = cloud.strip().lower()
@@ -7,8 +36,6 @@ def get_credentials(cloud):
         'google': 'GOOGLE_CREDENTIALS as JSON',
     }
     return cloud_cred.get(cloud, 'Unknown credentials (please update mapping)')
-
-
 
 def generate_githubaction(cloud, branch, tf_dir="."):
     """Generate GitHub Action YAML using Ollama"""
@@ -40,10 +67,9 @@ def save_yamlfile(content, path='.'):
     try:
         with open(yamlfile_path, 'w') as f:
             f.write(content)
-        print(f"\n YAML file saved to: {yamlfile_path.resolve()}")
+        print(f"\n✅ YAML file saved to: {yamlfile_path.resolve()}")
     except Exception as e:
         print(f"❌ Error saving YAML file: {e}")
-
 
 def main():
     print("GitHub Action Terraform Generator using Ollama")
