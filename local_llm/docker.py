@@ -18,8 +18,13 @@ Requirements:
 4.Copy only necessary files
     a.Use .dockerignore to exclude files like .git, node_modules, tests, etc.
     b.Copy only what's needed for build, then source code.
-5. Copy only necessary files
-6. Use multi-stage build if beneficial
+5.Use multi-stage builds when beneficial
+    a.Separate build and runtime environments to reduce size. Like: use a builder stage with compilers/tools, then copy the built artifacts to a minimal runtime image.
+6.Follow security best practices
+    a.Avoid running as root: create and use a non-root user.
+    b.Keep dependencies updated.
+    c.Use image scanners like Trivy or Docker Scout.
+    d.Minimize attack surface (no shell tools in production image).
 7. Follow security best practices
 8. Expose necessary ports if it's a web application
 9. Include proper cleanup to minimize image size
