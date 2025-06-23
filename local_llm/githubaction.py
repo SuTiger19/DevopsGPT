@@ -3,6 +3,27 @@ import ollama
 from pathlib import Path
 import os
 
+def generate_docker_ci(branch, app_dir, dockerhub_user, image_name):
+    """Generate GitHub Actions YAML for Docker build and push"""
+    prompt = PROMPT_TEMPLATE.format(
+        BRANCH=branch,
+        APP_DIR=app_dir,
+        DOCKERHUB_USERNAME=dockerhub_user,
+        IMAGE_NAME=image_name
+    )
+
+    try:
+        response = ollama.chat(
+            model='llama3',
+            messages=[{'role': 'user', 'content': prompt}],
+            options={'temperature': 0.2}
+        )
+        return response['message']['content']
+    except Exception as e:
+        print(f"Error generating GitHub Action YAML: {e}")
+        return None
+    
+    
 
 def save_yamlfile(content, path='.'):
     """Save generated YAML file"""
