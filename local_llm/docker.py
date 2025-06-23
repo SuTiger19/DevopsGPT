@@ -7,8 +7,12 @@ Generate an ideal Dockerfile for a {language} application following best practic
 The application {has_dependencies} dependencies.
 
 Requirements:
-1. Speical Reqiuremnt or No : {extra_requirement}, if no , then continue with rest of reqiurment 
-2. Use the most appropriate official base image
+1. Use the most appropriate official base image
+    a.Choose minimal and secure base images (e.g., alpine, slim, or distroless if possible). - python:3.12-slim, node:20-alpine, golang:1.21-alpine.
+2. Install required dependencies only {dependency_instructions}
+    a.Avoid unnecessary tools or build packages in the final image.
+    b.Use --no-cache or remove package manager caches.
+    c. For Node: npm ci instead of npm install.
 3. {dependency_instructions}
 4. Set proper working directory
 5. Copy only necessary files
