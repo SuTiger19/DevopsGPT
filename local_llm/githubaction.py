@@ -3,6 +3,25 @@ import ollama
 from pathlib import Path
 import os
 
+
+PROMPT_TEMPLATE = """
+Generate a GitHub Action YAML file that builds a Docker image from the application's Dockerfile and pushes it to Docker Hub.
+
+Requirements:
+1. The workflow should trigger on pushes to these branches: {BRANCH}.
+2. The Dockerfile is located in this directory: {APP_DIR}
+3. The job should:
+   - Set up Docker Buildx
+   - Log in to Docker Hub using secrets: `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN`
+   - Build the Docker image with the appropriate tag: `{DOCKERHUB_USERNAME}/{IMAGE_NAME}:latest`
+   - Push the image to Docker Hub
+4. Follow GitHub security and Docker best practices.
+5. Output only the GitHub Actions YAML file.
+"""
+
+
+
+
 def generate_docker_ci(branch, app_dir, dockerhub_user, image_name):
     """Generate GitHub Actions YAML for Docker build and push"""
     prompt = PROMPT_TEMPLATE.format(
@@ -23,7 +42,7 @@ def generate_docker_ci(branch, app_dir, dockerhub_user, image_name):
         print(f"Error generating GitHub Action YAML: {e}")
         return None
     
-    
+
 
 def save_yamlfile(content, path='.'):
     """Save generated YAML file"""
