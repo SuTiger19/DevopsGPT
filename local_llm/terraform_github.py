@@ -1,3 +1,16 @@
+def get_credentials(cloud):
+    """Return credentials required for a given cloud provider"""
+    cloud = cloud.strip().lower()
+    cloud_cred = {
+        'aws': 'AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY',
+        'azure': 'ARM_CLIENT_ID, ARM_CLIENT_SECRET, ARM_SUBSCRIPTION_ID, and ARM_TENANT_ID',
+        'google': 'GOOGLE_CREDENTIALS as JSON',
+    }
+    return cloud_cred.get(cloud, 'Unknown credentials (please update mapping)')
+
+
+
+
 def main():
     print("GitHub Action Terraform Generator using Ollama")
     print("Steps: terraform fmt → lint → sec → validate → plan\n")
