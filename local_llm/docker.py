@@ -13,8 +13,11 @@ Requirements:
     a.Avoid unnecessary tools or build packages in the final image.
     b.Use --no-cache or remove package manager caches.
     c. For Node: npm ci instead of npm install.
-3. {dependency_instructions}
-4. Set proper working directory
+3.Set a proper working directory
+    a.Use WORKDIR /app or a relevant directory name to isolate app files.
+4.Copy only necessary files
+    a.Use .dockerignore to exclude files like .git, node_modules, tests, etc.
+    b.Copy only what's needed for build, then source code.
 5. Copy only necessary files
 6. Use multi-stage build if beneficial
 7. Follow security best practices
