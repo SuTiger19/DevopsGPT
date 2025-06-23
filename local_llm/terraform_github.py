@@ -86,7 +86,7 @@ def main():
 
     tf_dir = input("Enter the Terraform directory path [default: '.']: ").strip() or '.'
 
-    print("\n🚀 Generating GitHub Action YAML...")
+    print("\n Generating GitHub Action YAML...")
     yamlfile = generate_githubaction(cloud, branch, tf_dir)
 
     if yamlfile:
