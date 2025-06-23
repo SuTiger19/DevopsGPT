@@ -4,6 +4,17 @@ from pathlib import Path
 import os
 
 
+def save_yamlfile(content, path='.'):
+    """Save generated YAML file"""
+    yamlfile_path = Path(path) / 'docker-ci.yml'
+    try:
+        with open(yamlfile_path, 'w') as f:
+            f.write(content)
+        print(f"\n YAML file saved to: {yamlfile_path.resolve()}")
+    except Exception as e:
+        print(f" Error saving YAML file: {e}")
+
+
 
 def main():
     print("GitHub Action Docker CI Generator using Ollama")
