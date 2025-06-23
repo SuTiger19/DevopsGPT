@@ -10,6 +10,40 @@ def get_credentials(cloud):
 
 
 
+def generate_githubaction(cloud, branch, tf_dir="."):
+    """Generate GitHub Action YAML using Ollama"""
+    credentials = get_credentials(cloud)
+    if "Unknown" in credentials:
+        print(f"Unsupported cloud: {cloud}")
+        return None
+
+    prompt = PROMPT_TEMPLATE.format(
+        CREDENTIALS=credentials,
+        BRANCH=branch,
+        TF_DIR=tf_dir
+    )
+
+    try:
+        response = ollama.chat(
+            model='llama3',
+            messages=[{'role': 'user', 'content': prompt}],
+            options={'temperature': 0.2}
+        )
+        return response['message']['content']
+    except Exception as e:
+        print(f"Error generating GitHub Action YAML: {e}")
+        return None
+
+def save_yamlfile(content, path='.'):
+    """Save generated YAML file"""
+    yamlfile_path = Path(path) / 'terraform.yml'
+    try:
+        with open(yamlfile_path, 'w') as f:
+            f.write(content)
+        print(f"\n YAML file saved to: {yamlfile_path.resolve()}")
+    except Exception as e:
+        print(f"❌ Error saving YAML file: {e}")
+
 
 def main():
     print("GitHub Action Terraform Generator using Ollama")
