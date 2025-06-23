@@ -67,9 +67,9 @@ def save_yamlfile(content, path='.'):
     try:
         with open(yamlfile_path, 'w') as f:
             f.write(content)
-        print(f"\n✅ YAML file saved to: {yamlfile_path.resolve()}")
+        print(f"\n YAML file saved to: {yamlfile_path.resolve()}")
     except Exception as e:
-        print(f"❌ Error saving YAML file: {e}")
+        print(f" Error saving YAML file: {e}")
 
 def main():
     print("GitHub Action Terraform Generator using Ollama")
