@@ -25,9 +25,13 @@ Requirements:
     b.Keep dependencies updated.
     c.Use image scanners like Trivy or Docker Scout.
     d.Minimize attack surface (no shell tools in production image).
-7. Follow security best practices
-8. Expose necessary ports if it's a web application
-9. Include proper cleanup to minimize image size
+7.Expose only necessary ports (for web apps)
+    a.Use EXPOSE relevant PORT .
+    b.Do not expose ports unnecessarily.
+8.Include proper cleanup to minimize image size
+    a.Remove temp build files, caches, logs after use.
+    b.Combine commands using && to reduce layers.
+    c. Use rm -rf /path/to/temp when needed.
 
 Output ONLY the Dockerfile content with no additional explanation or commentary.
 """
