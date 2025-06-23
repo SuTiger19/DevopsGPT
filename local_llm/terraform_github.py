@@ -1,24 +1,31 @@
+def main():
+    print("GitHub Action Terraform Generator using Ollama")
+    print("Steps: terraform fmt → lint → sec → validate → plan\n")
 
-'''
-Telling promopt what to do ofr terraform 
+    cloud = input("Enter the Cloud Provider (AWS, Azure, Google): ").strip()
+    while not cloud:
+        print("Cloud cannot be empty!")
+        cloud = input("Enter the Cloud Provider: ").strip()
 
+    branch = input("Enter the branch(es) to trigger on (comma-separated): ").strip()
+    if not branch:
+        branch = "main"
 
-Terraform directory {terraform_dir}
-Module type: {module_type} (local, remote)  --- Is module we are using create locally or are you using remote module like private module or public module
-Backend config: {yes_or_no} -- Like AWS S3  ( Use state locking DDB , but S3 has locking now feature)
-Steps to include:
-    Use tflint: {yes_or_no}
-    Use tfsec: {yes_or_no}
-    Format: {yes_or_no}
-    Init: {yes_or_no}
-    Validate: {yes_or_no}
-    Plan: {yes_or_no} -- but as well terraform plan -output=file
+    tf_dir = input("Enter the Terraform directory path [default: '.']: ").strip() or '.'
 
-Save plan file: {yes_or_no}
-Output plan as PR comment: {yes_or_no}
-Upload SARIF: {yes_or_no}
-Upload artifacts/logs: {yes_or_no}
+    print("\n🚀 Generating GitHub Action YAML...")
+    yamlfile = generate_githubaction(cloud, branch, tf_dir)
 
+    if yamlfile:
+        print("\n--- Generated YAML ---\n")
+        print(yamlfile)
 
-'''
+        save = input("\n Save this YAML to file? (y/n): ").lower()
+        if save == 'y':
+            path = input(f"Enter directory path [default: {os.getcwd()}]: ").strip()
+            save_yamlfile(yamlfile, path or '.')
+    else:
+        print(" Failed to generate the GitHub Action YAML")
 
+if __name__ == '__main__':
+    main()
