@@ -24,48 +24,14 @@ Each folder contains model-specific logic and usage guides.
 
 ---
 
-##  Project Structure
-
-
-
-📁 DevOpsGPT/
-│
-├── AWS/
-│   ├── commit.py
-│   ├── terraform.py
-│   ├── docker.py
-│   └── dockerci\_cd.py
-│
-├── Azure/
-│   ├── commit.py
-│   ├── terraform.py
-│   ├── docker.py
-│   └── dockerci\_cd.py
-│
-├── Google/
-│   ├── commit.py
-│   ├── terraform.py
-│   ├── docker.py
-│   └── dockerci\_cd.py
-│
-├── local\_llm/
-│   ├── commit.py
-│   ├── terraform.py
-│   ├── docker.py
-│   └── dockerci\_cd.py
-│
-└── README.md  ← (you are here)
-
----
-
 ##  What Each Script Does
 
 | Script         | Description |
 |----------------|-------------|
 | `commit.py`    | Generates a meaningful commit message from recent `git diff` |
 | `docker.py`    | Creates an optimized Dockerfile based on language and project setup |
-| `dockerci_cd.py` | Generates GitHub Actions workflow for Docker CI/CD |
-| `terraform.py` | Generates GitHub Actions workflow for Terraform deployments |
+| `docker_cicd.py` | Generates GitHub Actions workflow for Docker CI/CD |
+| `terraform_github.py` | Generates GitHub Actions workflow for Terraform deployments |
 
 ---
 
